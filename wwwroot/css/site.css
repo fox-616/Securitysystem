@@ -1,0 +1,32 @@
+﻿body {
+    background-color: rgb(187, 181, 196); /* 背景顏色 */
+    margin: 0; /* 移除默認邊距 */
+    padding: 0; /* 移除默認內邊距 */
+}
+
+.myShadow {
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明的黑色背景 */
+    color: white; /* 白色字體 */
+    padding: 15px;
+    border-radius: 5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* 黑色陰影 */
+}
+
+.buttonShadow {
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6); /* 黑色陰影 */
+}
+
+.buyin {
+    background-color: red; /* 紅色背景 */
+    color: white; /* 白色字體 */
+}
+
+.sellout {
+    background-color: green; /* 綠色背景 */
+    color: white; /* 白色字體 */
+}
+
+.headerTitleColor {
+    background-color: lightcyan; /* 輕灰色背景 */
+    color: black; /* 黑色字體 */
+}

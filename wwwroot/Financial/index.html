@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>財務基本資料</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+    <div class="container">
+        <h2>財務基本資料</h2>
+        <table id="FinaList" class="table table-striped border border-2 border-dark rounded table-hover mt-3">
+            <thead>
+                <tr class="table-info border border-bottom border-primary border-1">
+                    <th>公司代碼</th>
+                    <th>公司名稱</th>
+                    <th>財務年度</th>
+                    <th>季度</th>
+                    <th>營業收入</th>
+                    <th>每股盈餘</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="dataManageModal" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <script>
+
+        let modalForm = `
+        <form id="dataManageModalForm">
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="CompanyID" class="form-label">公司代碼</label>
+                        <input type="text" class="form-control" id="CompanyID" name="CompanyID">
+                        <span class="text-danger"></span>
+                    </div>
+                        <div class="mb-3">
+                        <label for="CompanyName" class="form-label">公司名稱</label>
+                        <input type="text" class="form-control" id="CompanyName" name="CompanyName">
+                        <span class="text-danger"></span>
+                    </div>
+                     <div class="mb-3">
+                         <label for="FinancialYear" class="form-label">財務年度</label>
+                         <input type="text" class="form-control" id="FinancialYear" name="FinancialYear">
+                         <span class="text-danger"></span>
+                     </div>
+                     <div class="mb-3">
+                         <label for="Quarter" class="form-label">季度</label>
+                         <input type="text" class="form-control" id="Quarter" name="Quarter">
+                         <span class="text-danger"></span>
+                     </div>
+                     <div class="mb-3">
+                        <label for="FinancialReportDate" class="form-label">財務報告日期</label>
+                        <input type="text" class="form-control" placeholder="YYYY/MM/DD" id="FinancialReportDate" name="FinancialReportDate">
+                        <span class="text-danger"></span>
+                    </div>                   
+                </div>
+                <div class="col">
+                     <div class="mb-3">
+                         <label for="OperatingRevenue" class="form-label">營業收入</label>
+                         <input type="text" class="form-control" id="OperatingRevenue" name="OperatingRevenue">
+                         <span class="text-danger"></span>
+                     </div>
+                     <div class="mb-3">
+                         <label for="OperatingCosts" class="form-label">營業成本</label>
+                         <input type="text" class="form-control" id="OperatingCosts" name="OperatingCosts">
+                         <span class="text-danger"></span>
+                     </div>
+                     <div class="mb-3">
+                         <label for="NonOperatingIncomeExpenses" class="form-label">業外收支</label>
+                         <input type="text" class="form-control" id="NonOperatingIncomeExpenses" name="NonOperatingIncomeExpenses">
+                         <span class="text-danger"></span>
+                     </div>
+                     <div class="mb-3">
+                         <label for="GrossProfit" class="form-label">毛利</label>
+                         <input type="text" class="form-control" id="GrossProfit" name="GrossProfit">
+                         <span class="text-danger"></span>
+                     </div>
+                    <div class="mb-3">
+                        <label for="OperatingExpenses" class="form-label">營業費用</label>
+                        <input type="text" class="form-control" id="OperatingExpenses" name="OperatingExpenses">
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                  <div class="col">
+                      <div class="mb-3">
+                          <label for="IncomeTaxExpense" class="form-label">所得稅費用</label>
+                          <input type="text" class="form-control" id="IncomeTaxExpense" name="IncomeTaxExpense">
+                          <span class="text-danger"></span>
+                      </div>
+                      <div class="mb-3">
+                          <label for="OperatingIncome" class="form-label">營業利益</label>
+                          <input type="text" class="form-control"  id="OperatingIncome" name="OperatingIncome">
+                          <span class="text-danger"></span>
+                      </div>
+                      <div class="mb-3">
+                          <label for="ProfitBeforeTax" class="form-label">稅前利潤</label>
+                          <input type="text" class="form-control" id="ProfitBeforeTax" name="ProfitBeforeTax">
+                          <span class="text-danger"></span>
+                      </div>
+                      <div class="mb-3">
+                          <label for="NetProfitAfterTax" class="form-label">稅後利潤</label>
+                          <input type="text" class="form-control" id="NetProfitAfterTax" name="NetProfitAfterTax">
+                          <span class="text-danger"></span>
+                      </div>
+                      <div class="mb-3">
+                          <label for="EPS" class="form-label">每股盈餘</label>
+                          <input type="text" class="form-control" id="EPS" name="EPS">
+                          <span class="text-danger"></span>
+                      </div>                       
+                  </div>
+            </div>
+        </form>
+        `;
+
+        const dataManageModalEl = document.getElementById('dataManageModal');
+
+
+        dataManageModalEl.addEventListener('show.bs.modal', event => {
+            $('#dataManageModal .modal-header>h1').text('財務基本資料');
+            $('#dataManageModal .modal-body').html(modalForm);
+        })
+
+        const dataManageModal = new bootstrap.Modal(dataManageModalEl)
+
+        //檢視公司財務基本資料
+        function GetFinaDetail(id) {
+            $.ajax({
+                type: "Get",
+                url: `http://localhost:5014/apiFinancials/${id}`,
+                success: function (data) {
+                    console.log(data);
+
+                    //調整日期格式測試，測試成功
+                    let financialReportDateFormatted = new Date(data.financialReportDate).toLocaleDateString('zh-TW', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    });
+
+                    $('#dataManageModal .modal-header>h1').text('財務基本資料');
+                    $('#dataManageModal .modal-body').html(modalForm);
+                    $('#btnUpdate').addClass('btn-waring').text('確定修改').attr('onclick', `updateAcct('${id}')`);
+                    $('#CompanyID').val(data.companyID);
+                    $('#CompanyName').val(data.companyName);
+                    $('#FinancialYear').val(data.financialYear);
+                    $('#Quarter').val(data.quarter);
+                    $('#FinancialReportDate').val(financialReportDateFormatted);
+                    $('#OperatingRevenue').val(data.operatingRevenue);
+                    $('#OperatingCosts').val(data.operatingCosts);
+                    $('#NonOperatingIncomeExpenses').val(data.nonOperatingIncomeExpenses);
+                    $('#GrossProfit').val(data.grossProfit);
+                    $('#OperatingExpenses').val(data.operatingExpenses);
+                    $('#IncomeTaxExpense').val(data.incomeTaxExpense);
+                    $('#OperatingIncome').val(data.operatingIncome);
+                    $('#ProfitBeforeTax').val(data.profitBeforeTax);
+                    $('#NetProfitAfterTax').val(data.netProfitAfterTax);
+                    $('#EPS').val(data.eps);
+                },
+
+                error: function (rsep) {
+                    console.log(rsep);
+                }
+            });
+        }
+
+        getFinaList();
+        //取出所有公司財務資料
+        function getFinaList() {
+            $.ajax({
+                type: "Get",
+                url: "http://localhost:5014/apiFinancials",
+                success: function (data) {
+                    console.log(data);
+                    $('#FinaList tbody').empty();
+
+                    let trItem = ""
+                    for (let item of data) {
+
+                        trItem = `
+                         <tr>
+                              <td>${item.companyID}</td>
+                              <td>${item.companyName}</td>
+                              <td>${item.financialYear}</td>
+                              <td>${item.quarter}</td>
+                              <td>${item.operatingRevenue}</td>
+                              <td>${item.eps}</td>
+                              <td>
+                                 <button class="btn btn-secondary btn-outline-dark buttonShadow" data-bs-toggle="modal" data-bs-target="#dataManageModal" onclick="GetFinaDetail('${item.companyID}')">檢視</button>
+                              </td>
+                         </tr>
+                         `
+                        $('#FinaList tbody').append(trItem);
+                    }
+
+                },
+                error: function (resp) {
+                    console.log(rsep);
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>

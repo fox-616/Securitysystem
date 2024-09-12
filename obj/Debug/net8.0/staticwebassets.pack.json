@@ -1,0 +1,93 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\AccountCompanies\\index.html",
+      "PackagePath": "staticwebassets\\AccountCompanies\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\AccountSecurities\\index.html",
+      "PackagePath": "staticwebassets\\AccountSecurities\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\Accounts\\index.html",
+      "PackagePath": "staticwebassets\\Accounts\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\Companies\\index.html",
+      "PackagePath": "staticwebassets\\Companies\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\Dividends\\index.html",
+      "PackagePath": "staticwebassets\\Dividends\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\Financial\\index.html",
+      "PackagePath": "staticwebassets\\Financial\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\Home\\index.html",
+      "PackagePath": "staticwebassets\\Home\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\Invests\\index.html",
+      "PackagePath": "staticwebassets\\Invests\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\Login\\index.html",
+      "PackagePath": "staticwebassets\\Login\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\Securities\\index.html",
+      "PackagePath": "staticwebassets\\Securities\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\Shareholders\\index.html",
+      "PackagePath": "staticwebassets\\Shareholders\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\SourcePhoto\\1.jpg",
+      "PackagePath": "staticwebassets\\SourcePhoto\\1.jpg"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\SourcePhoto\\2.jpg",
+      "PackagePath": "staticwebassets\\SourcePhoto\\2.jpg"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\SourcePhoto\\3.jpg",
+      "PackagePath": "staticwebassets\\SourcePhoto\\3.jpg"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\SourcePhoto\\4.jpg",
+      "PackagePath": "staticwebassets\\SourcePhoto\\4.jpg"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\SourcePhoto\\5.jpg",
+      "PackagePath": "staticwebassets\\SourcePhoto\\5.jpg"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\StockDayALLs\\index.html",
+      "PackagePath": "staticwebassets\\StockDayALLs\\index.html"
+    },
+    {
+      "Id": "D:\\行動商務設計與開發\\系統分析\\證券系統\\Program\\CSharp\\SecurtiesSystem\\WebAPI_3\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebAPI_3.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.WebAPI_3.props",
+      "PackagePath": "build\\WebAPI_3.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.WebAPI_3.props",
+      "PackagePath": "buildMultiTargeting\\WebAPI_3.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.WebAPI_3.props",
+      "PackagePath": "buildTransitive\\WebAPI_3.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

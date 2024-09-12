@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>證券系統</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><strong>證券系統</strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/Home/index.html">首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Accounts/index.html">會員帳號管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/AccountSecurities/index.html">自選庫存</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/AccountCompanies/index.html">公司基本資料</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/StockDayALLs/index.html">上市個股日成交資訊</a>
+                    </li>
+                </ul>                
+                <div class="ms-auto">
+                    <a href="/Login/index.html" class="btn btn-primary " id="logstatus">登入</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>歡迎來到股市天地！</h1>
+
+        <span>
+            親愛的用戶，感謝您光臨我們的股市天地。我們致力於提供最新的股市資訊和精確的報價，讓您輕鬆掌握市場動態。
+            希望您在這裡能找到有用的資訊，並享受便捷的投資體驗。如果您有任何問題或建議，隨時與我們聯繫。我們期待您的寶貴意見，並祝您投資順利！
+        </span>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner ">
+                            <div class="carousel-item active">
+                                <img src="/SourcePhoto/1.jpg" class="d-block w-100" alt="Stock Market">
+                                <div class="carousel-caption d-none d-lg-block myShadow">
+                                    <h4>精準掌握股市動態</h4>
+                                    <p>
+                                        歡迎來到我們的股市天地！在這裡，您可以隨時查看最新的股市走勢和趨勢，掌握最即時的市場資訊。
+                                        無論您是專業投資者還是新手，我們都提供最全面的股市分析工具，助您做出明智的投資決策
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/SourcePhoto/2.jpg" class="d-block w-100" alt="Bull Market">
+                                <div class="carousel-caption d-none d-lg-block myShadow">
+                                    <h4>投資回報穩步上升</h4>
+                                    <p>
+                                        在我們的股市平台上，您的投資可以隨著市場的繁榮而穩步增值。紅線一路向上，
+                                        象徵著我們對於未來市場的信心以及您投資回報的潛力。加入我們，讓您的財富隨著市場的成長而一起增長！
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/SourcePhoto/3.jpg" class="d-block w-100" alt="Wall Street Bull">
+                                <div class="carousel-caption d-none d-lg-block myShadow">
+                                    <h4>掌握華爾街的投資機遇</h4>
+                                    <p>
+                                        華爾街的金牛代表了無限的財富機會與經濟實力。在這裡，我們提供最具前瞻性的市場分析和投資建議，
+                                        幫助您把握每一個財富增值的機會。隨著華爾街的腳步，一起走向成功的投資之路！
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <script>
+
+        // 當頁面加載完成時，執行權限檢查
+        $(document).ready(function () {
+            checkUserStatus();
+        });
+        // 權限檢查
+        function checkUserStatus() {
+            $.ajax({
+                type: "Get",
+                url: "http://localhost:5014/apiAuthController/checkStatus", // 這個端點應該返回用戶的權限狀態
+                success: function (response) {
+                    if (response.isLoggedIn) {
+                        // 登入後，登入鍵改成登出鍵
+                        $('#logstatus')
+                            .removeClass('btn-primary')
+                            .addClass('btn-warning')
+                            .text('登出')
+                            .attr('onclick', 'Logout()'); // 绑定登出功能;
+                    }
+                },
+                error: function (xhr) {
+                    // 處理其他錯誤
+                    console.log(xhr);
+
+                }
+            });
+        }
+        // 登出
+        function Logout() {
+            $.ajax({
+                type: "Post",
+                url: "http://localhost:5014/apiAuthController/logout",
+                success: function () {
+                    window.location.href = "/home/index.html"; // 登出後導向首頁或登入頁
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                    alert("登出失敗，請稍後再試。");
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

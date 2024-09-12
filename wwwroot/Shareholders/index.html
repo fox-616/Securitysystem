@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主要股東名冊</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+    <div class="container">
+        <h2>主要股東名冊</h2>
+        <!--<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dataManageModal">增加主要股東</button>-->
+        <table id="HoldList" class="table table-striped border border-2 border-dark rounded table-hover mt-3">
+            <thead>
+                <tr class="table-info border border-bottom border-primary border-1">
+                    <th>股東社會安全碼</th>
+                    <th>股東名稱</th>           
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <!-- Modal -->
+        <div class="modal fade" id="dataManageModal" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="btnUpdate"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
+
+        <script>
+
+            let modalForm = `
+             <form id="dataManageModalForm">
+                   <div class="cow">
+                     <div class="col">
+                         <div class="mb-3">
+                             <label for="ShareholderName" class="form-label">股東名稱</label>
+                             <input type="text" class="form-control" id="ShareholderName" name="ShareholderName">
+                             <span class="text-danger"></span>
+                         </div>
+                     </div>
+                   </div>
+             </form>
+             `;           
+
+            const dataManageModalEl = document.getElementById('dataManageModal');
+
+
+            dataManageModalEl.addEventListener('show.bs.modal', event => {
+                $('#dataManageModal .modal-header>h1').text('增加主要股東');
+                $('#dataManageModal .modal-body').html(modalForm);
+                $('#btnUpdate').addClass('btn-primary').text('確定').attr('onclick', 'createHold()');
+
+            })
+
+            const dataManageModal = new bootstrap.Modal(dataManageModalEl)
+
+            getHoldList();
+            //取出所有股東名冊
+            function getHoldList() {
+                $.ajax({
+                    type: "Get",
+                    url: "http://localhost:5014/apiShareholders",
+                    success: function (data) {
+                        console.log(data);
+                        $('#HoldList tbody').empty();
+
+                        let trItem = ""
+                        for (let item of data) {
+
+                            trItem = `
+                              <tr>
+                                   <td>${item.ssn}</td>
+                                   <td>${item.shareholderName}</td>                                  
+                              </tr>
+                              `
+                            $('#HoldList tbody').append(trItem);
+                        }
+
+                    },
+                    error: function (resp) {
+                        console.log(rsep);
+                    }
+                });
+            }
+
+        </script>
+
+    </div>
+</body>
+</html>

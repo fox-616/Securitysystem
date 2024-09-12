@@ -1,0 +1,450 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自選報價</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="/css/site.css">
+
+    
+</head>
+<body>
+    <!--navbar-->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><strong>證券系統</strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/Home/index.html">首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Accounts/index.html">會員帳號管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/AccountSecurities/index.html">自選庫存</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/AccountCompanies/index.html">公司基本資料</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/StockDayALLs/index.html">上市個股日成交資訊</a>
+                    </li>
+                </ul>
+                <div class="ms-auto">
+                    <a href="/Login/index.html" class="btn btn-primary " id="logstatus">登入</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!--未登入，預設隱藏-->
+    <div id="pageContent" class="container" style="display: none;">
+        <h2>自選報價</h2>
+        <button class="btn btn-primary buttonShadow" data-bs-toggle="modal" data-bs-target="#dataManageModal">買入股票</button>
+        <button class="btn btn-danger buttonShadow" data-bs-toggle="modal" data-bs-target="#dataManageModal" onclick="sellFormSecu()">賣出股票</button>
+        <table id="AcctSecuList" class="table table-striped border border-2 border-dark rounded table-hover mt-3">
+            <thead>
+                <tr class="table-info border border-bottom border-primary border-1">
+                    
+                    <th>股票代號</th>
+                    <th>股票名稱</th>
+                    <th>當前價格</th>
+                    <th>持有股數</th>
+                    <th>參考損益</th>
+                    <th>參考損益率</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="dataManageModal" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header headerTitleColor" >
+                        <h1 class="modal-title fs-5"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="btnUpdate"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--getlist後，存入 accountID-->
+        <input type="hidden" id="accountID" />        
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
+
+        <script>
+            //買賣股票 Modal 公版
+            let modalForm = `
+                <form id="dataManageModalForm">
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="AccountID" class="form-label" style="display:none">會員編號</label>
+                            <input type="hidden" class="form-control" id="AccountID" name="AccountID">
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col">                            
+                            <div class="mb-3">
+                                <label for="SecurityID" class="form-label">股票代號</label>
+                                <input type="text" class="form-control" id="SecurityID" name="SecurityID">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="PurchasedShares" class="form-label">股數</label>
+                                <input type="text" class="form-control" id="PurchasedShares" name="PurchasedShares">
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="PurchasePrice" class="form-label">價格</label>
+                                <input type="text" class="form-control" id="PurchasePrice" name="PurchasePrice">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                `;
+
+            //自選股票基本資料 detail
+            let modalDetailForm = `
+                <form id="dataManageModalForm">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="SecurityID" class="form-label">股票代號</label>
+                                <input type="text" class="form-control" id="SecurityID" name="SecurityID">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mb-3">
+                                <label for="SecurityName" class="form-label">股票名稱</label>
+                                <input type="text" class="form-control" id="SecurityName" name="SecurityName">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                              <div class="mb-3">
+                                <label for="SharesOwned" class="form-label">持有股數</label>
+                                <input type="text" class="form-control" id="SharesOwned" name="SharesOwned">
+                                <span class="text-danger"></span>
+                            </div>                        
+                            <div class="mb-3">
+                                <label for="HoldingCost" class="form-label">持有成本</label>
+                                <input type="text" class="form-control" id="HoldingCost" name="HoldingCost">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="AveragePrice" class="form-label">平均價格</label>
+                                <input type="text" class="form-control" id="AveragePrice" name="AveragePrice">
+                                <span class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="MarketPrice" class="form-label">市值</label>
+                                <input type="text" class="form-control" id="MarketPrice" name="MarketPrice">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="UnrealizedProfitLoss" class="form-label">參考損益</label>
+                                <input type="text" class="form-control" id="UnrealizedProfitLoss" name="UnrealizedProfitLoss">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="ProfitLossPercentage" class="form-label">損益率</label>
+                                <input type="text" class="form-control" id="ProfitLossPercentage" name="ProfitLossPercentage">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            `;
+
+            const dataManageModalEl = document.getElementById('dataManageModal');
+                        
+            //呼叫買進股票 Modal 
+            dataManageModalEl.addEventListener('show.bs.modal', event => {
+                $('#dataManageModal .modal-header').removeClass('headerTitleColor').removeClass('sellout').addClass('buyin');
+                $('#dataManageModal .modal-header>h1').text('買入股票');
+                $('#dataManageModal .modal-body').html(modalForm);
+                $('#AccountID').val($('#accountID').val()); // 將 accountID 填入 modal 的 AccountID 欄位               
+                $('#btnUpdate').addClass('btn-primary').text('確定').attr('onclick', 'createAcctSecu()');
+
+            })
+
+            const dataManageModal = new bootstrap.Modal(dataManageModalEl)
+
+            //呼叫賣出股票 Modal
+            function sellFormSecu() {
+                $('#dataManageModal .modal-header').removeClass('headerTitleColor').removeClass('buyin').addClass('sellout');
+                $('#dataManageModal .modal-header>h1').text('賣出股票');
+                $('#btnUpdate').addClass('btn-primary').text('確定').attr('onclick', 'sellAcctSecu()');
+            }
+
+            //刪除投資計畫
+            function DeleteAcctSecu(id,securityID) {
+                $.ajax({
+                    type: "Delete",
+                    url: `http://localhost:5014/apiAccountSecurities/${id}/${securityID}`,
+                    success: function () {
+                        //更新畫面
+                        getAcctSecuList();
+                    },
+                    error: function (resp) {
+                        //console.log(resp);
+                    }
+                });
+            }
+
+            //賣出投資計畫
+            function sellAcctSecu() {
+                ////※將表單資料組合成JSON格式※
+                const jsonData = {
+                    AccountID: $('#AccountID').val(),
+                    SecurityID: $('#SecurityID').val(),
+                    PurchasedShares: parseInt($('#PurchasedShares').val()),
+                    PurchasePrice: $('#PurchasePrice').val(),
+                    Isbuy: false // 如果是賣出，設定為 false
+                }
+
+                //console.log(jsonData);
+
+                $.ajax({
+                    type: "Post",
+                    url: "http://localhost:5014/apiAccountSecurities",
+                    data: JSON.stringify(jsonData),
+                    contentType: "application/json",
+                    success: function () {
+                        //console.log();
+                        dataManageModal.hide();
+                        getAcctSecuList();
+                    },
+
+                    error: function (resp) {                        
+                        dataManageModal.hide();
+                        //持有股數<0，警示
+                        alert(resp.responseJSON.message);
+                    }
+                });
+            }
+
+            //新增投資計畫
+            function createAcctSecu() {
+                //※將表單資料組合成JSON格式※
+                const jsonData = {
+                    AccountID: $('#AccountID').val(),
+                    SecurityID: $('#SecurityID').val(),
+                    PurchasedShares: $('#PurchasedShares').val(),
+                    PurchasePrice: $('#PurchasePrice').val(),
+                    Isbuy: true // 如果是買出，設定為 true
+                }
+
+                $.ajax({
+                    type: "Post",
+                    url: "http://localhost:5014/apiAccountSecurities",
+                    data: JSON.stringify(jsonData),
+                    contentType: "application/json",
+                    success: function (resp) {
+                        //alert('test1');
+
+                        //console.log();
+                        dataManageModal.hide();
+                        getAcctSecuList();
+                    },
+
+                    //error: function (xhr) {
+                    //    console.log('XHR Status:', xhr.status);
+                    //    console.log('XHR Response:', xhr.responseText);
+                    //    console.log('XHR Response JSON:', xhr.responseJSON);
+                    //    // 確保使用 xhr.responseJSON 來解析 JSON 錯誤響應
+                    //    if (xhr.responseJSON && xhr.responseJSON.success === false) {
+                    //        dataManageModal.hide();
+                    //        alert(xhr.responseJSON.message);
+                    //    } else {
+                    //        // 顯示其他錯誤
+                    //        dataManageModal.hide();
+                    //        alert(xhr.responseText);
+                    //    }
+                    //}
+                    error: function (resp) {
+                        alert('test2')
+                        
+                        if (resp.success === false) {
+                            dataManageModal.hide();
+                            alert(resp.message);
+                        }
+                        dataManageModal.hide();
+                        alert(resp.responseText);
+
+                    }
+                });
+            }
+            
+            getAcctSecuList();
+            //取出所有股票資料 List
+            function getAcctSecuList() {
+                $.ajax({
+                    type: "Get",
+                    url: "http://localhost:5014/apiAccountSecurities",
+                    success: function (data) {
+                        $('#AcctSecuList>tbody').empty();                      
+                        $('#accountID').val(data[0].accountID);
+                        
+                        let trItem = ""
+                        for (let item of data) {
+
+                            if (item.unrealizedProfitLoss > 0)
+                                profitLossIcon = '<span class="text-danger  fs-5"><i class="bi bi-caret-up-fill"></i></span>';
+
+                            if (item.unrealizedProfitLoss < 0)
+                                profitLossIcon = '<span class="text-success  fs-5"><i class="bi bi-caret-down-fill"></i></span>';
+                            
+                            if (item.unrealizedProfitLoss == 0)
+                                profitLossIcon = '<span class="text-dark  fs-5"><i class="bi bi-pause-fill"></i></span>';
+
+
+                            trItem = `
+                                              <tr>
+                                                  
+                                                   <td>${item.securityID}</td>
+                                                   <td>${item.securityName}</td>
+                                                   <td>${item.marketPrice}</td>
+                                                   <td>${item.sharesOwned}</td>
+                                                   <td>${profitLossIcon} ${item.unrealizedProfitLoss}</td>
+                                                   // 四捨五入到小數點後第 2 位，但不顯示多餘的 0
+                                                   <td>${profitLossIcon}  ${Math.round(item.profitLossPercentage * 100) / 100}%</td>
+                                                   <td>
+                                                      <button class="btn btn-secondary buttonShadow " data-bs-toggle="modal" data-bs-target="#dataManageModal" onclick="GetAcctSecuDetail('${item.accountID}','${item.securityID}')">檢視</button>
+                                                      <button class="btn btn-danger buttonShadow" onclick="DeleteAcctSecu('${item.accountID}','${item.securityID}')">刪除</button>
+                                                   </td>
+                                              </tr>
+                                                                                                                         `
+                            $('#AcctSecuList tbody').append(trItem);
+                        }
+                       
+                    },
+                    error: function (resp) {
+                        window.location.href = "/home/index.html";
+                    }
+                });
+            }
+
+            //檢視股票詳細資料
+            function GetAcctSecuDetail(id, securityID) {
+                $.ajax({
+                    type: "Get",
+                    url: `http://localhost:5014/apiAccountSecurities/${id}/${securityID}`,
+                    success: function (data) {
+                        //console.log(data);
+                        $('#dataManageModal .modal-header').removeClass('sellout').removeClass('buyin').addClass('headerTitleColor');
+                        $('#dataManageModal .modal-header>h1').text('股票基本資料');
+                        $('#dataManageModal .modal-body').html(modalDetailForm);
+                                                
+                        $('#SecurityID').val(data.securityID);
+                        $('#SecurityName').val(data.securityName);
+                        $('#SharesOwned').val(data.sharesOwned);
+                        $('#HoldingCost').val(data.holdingCost);
+                        $('#AveragePrice').val(data.averagePrice);
+                        $('#MarketPrice').val(data.marketPrice);
+                        $('#UnrealizedProfitLoss').val(data.unrealizedProfitLoss);
+                        $('#ProfitLossPercentage').val(data.profitLossPercentage);
+                    },
+
+                    error: function (rsep) {
+                        console.log(rsep);
+                    }
+                });
+            }
+
+            // 當頁面加載完成時，執行權限檢查
+            $(document).ready(function () {
+                checkUserStatus();
+            });
+
+            //權限檢查
+            function checkUserStatus() {
+                $.ajax({
+                    type: "Get",
+                    url: "http://localhost:5014/apiAuthController/checkStatus", // 這個端點應該返回用戶的權限狀態
+                    success: function (response) {
+                        if (response.isLoggedIn) {   
+                            // 如果有權限，顯示頁面內容
+                            $('#pageContent').show();
+                            getAcctSecuList(); // 載入資料
+
+                            // 登入後，登入鍵改成登出鍵
+                            $('#logstatus')
+                                .removeClass('btn-primary')
+                                .addClass('btn-warning')
+                                .text('登出')
+                                .attr('onclick', 'Logout()'); // 绑定登出功能;
+
+                        } else {
+                            // 如果沒有權限，隱藏頁面內容並跳轉到首頁
+                            $('#pageContent').hide();
+                            window.location.href = "/home/index.html";
+                        }
+                    },
+                    error: function (xhr) {
+                        // 處理其他錯誤
+                        console.log(xhr);
+                        //alert("無法檢查權限，請稍後再試。");
+                    }
+                });
+            }
+
+            //登出
+            function Logout() {
+                $.ajax({
+                    type: "Post",
+                    url: "http://localhost:5014/apiAuthController/logout",
+                    success: function () {
+                        window.location.href = "/home/index.html"; // 登出後導向首頁或登入頁
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                        alert("登出失敗，請稍後再試。");
+                    }
+                });
+            }
+
+        </script>
+
+    </div>
+</body>
+</html>

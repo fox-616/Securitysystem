@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>股市價格</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><strong>證券系統</strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/Home/index.html">首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Accounts/index.html">會員帳號管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/AccountSecurities/index.html">自選庫存</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Securities/index.html">上市類股報價</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/AccountCompanies/index.html">公司基本資料</a>
+                    </li>
+                </ul>
+                <div class="ms-auto">
+                    <a href="/Login/index.html" class="btn btn-warning" onclick="Logout()">登出</a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <!--<div id="pageContent" class="container" style="display: none;">
+        <div class="container">
+            <h2>股市價格</h2>
+            <button class="btn btn-primary buttonShadow" data-bs-toggle="modal" data-bs-target="#dataManageModal" onclick="createSecu()">新增股票資料</button>
+            <table id="SecuList" class="table table-striped border border-2 border-dark rounded table-hover mt-3">
+                <thead>
+                    <tr class="table-info border border-bottom border-primary border-1">
+                        <th>股票代號</th>
+                        <th>股票名稱</th>
+                        <th>當前價格</th>
+                        <th colspan="2">漲跌幅</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+    <!-- Modal -->
+    <!--<div class="modal fade" id="dataManageModal" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdate"></button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+
+    <div id="pageContent" class="container">
+        <h2>上市個股日成交資訊</h2>
+        <!--<button class="btn btn-primary buttonShadow" data-bs-toggle="modal" data-bs-target="#dataManageModal">新增會員資料</button>-->
+        <table id="StockDayList" class="table table-striped border border-2 border-dark rounded table-hover mt-3">
+            <thead>
+                <tr class="table-info border border-bottom border-primary border-1">
+                    <th>證券代號</th>
+                    <th>證券名稱</th>
+                    <th>成交股數</th>
+                    <th>成交金額</th>
+                    <th>開盤價</th>
+                    <th>最高價</th>
+                    <th>最低價</th>
+                    <th>收盤價</th>
+                    <th>漲跌價差</th>
+                    <th>成交筆數</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script>
+
+        //let modalForm = `
+        //                                 <form id="dataManageModalForm">
+        //                                    <div class="mb-3">
+        //                                        <label for="AccountID" class="form-label">股票代號</label>
+        //                                        <input type="text" class="form-control" id="SecurityID" name="SecurityID">
+        //                                        <span class="text-danger"></span>
+        //                                    </div>
+        //                                 </form>
+        //                                 `;
+
+        //const dataManageModalEl = document.getElementById('dataManageModal');
+
+
+        //dataManageModalEl.addEventListener('show.bs.modal', event => {
+        //    $('#dataManageModal .modal-header>h1').text('新增股票資料');
+        //    $('#dataManageModal .modal-body').html(modalForm);
+        //    $('#btnUpdate').addClass('btn-primary').text('確定新增').attr('onclick', 'createSecu()');
+        //})
+
+        //const dataManageModal = new bootstrap.Modal(dataManageModalEl)
+
+        //刪除指定股票Form
+        //function DeleteSecuForm(securityID, securityName) {
+
+        //    $('#dataManageModal .modal-header>h1').text('刪除股票資料');
+        //    $('#dataManageModal .modal-body').html(`<h2>你確定要刪除 ${securityName} 嗎？</h2>`);
+        //    $('#btnUpdate').addClass('btn-danger').text('確定刪除').attr('onclick', `DeleteSecu(${securityID})`);
+        //}
+
+        //刪除指定股票資料
+        //function DeleteSecu(id) {
+        //    $.ajax({
+        //        type: "Delete",
+        //        url: `http://localhost:5014/apiSecurities/${id}`,
+        //        success: function () {
+        //            alert('test1');
+        //            //1.把modal關閉
+        //            dataManageModal.hide();
+
+        //            //2.更新畫面
+        //            getSecuList();
+        //        },
+        //        error: function (resp) {
+        //            alert('test2');
+        //            console.log(resp);
+        //        }
+        //    });
+        //}
+
+        getSecuList();
+        //取出所有股市資料
+        function getSecuList() {
+            //$.ajax({
+            //    type: "Get",
+            //    url: "http://localhost:5014/apiSecurities",
+            //    success: function (data) {
+
+            //        console.log(data);
+            //        $('#SecuList>tbody').empty();
+
+            //        let trItem = ""
+            //        for (let item of data) {
+
+            //            // 計算 marketPrice 和 openingPrice 的差異
+            //            let priceDifference = (item.marketPrice - item.openingPrice).toFixed(3);
+            //            // 四捨五入到小數點後第 3 位，但不顯示多餘的 0
+            //            let priceDifferenceFormat = (Math.round(priceDifference * 1000) / 1000);
+
+            //            trItem = `
+            //                                                 <tr>
+            //                                                      <td>${item.securityID}</td>
+            //                                                      <td>${item.securityName}</td>
+            //                                                      <td>${item.marketPrice}</td>
+            //                                                      <td>${priceDifferenceFormat}</td>
+            //                                                      <td>${item.priceChange}%</td>
+            //                                                      <td>
+            //                                                         <button class="btn btn-close" data-bs-toggle="modal" data-bs-target="#dataManageModal" onclick="DeleteSecuForm('${item.securityID}','${item.securityName}')"></button>
+            //                                                      </td>
+            //                                                 </tr>
+            //                                                 `
+            //            $('#SecuList tbody').append(trItem);
+            //        }
+            //    },
+            //    error: function (resp) {
+
+            //        window.location.href = "/home/index.html";
+            //        //console.log(rsep);
+
+            //    }
+            //});
+
+
+            $.ajax({
+                type: "Get",
+                url: "http://localhost:5014/apiStockDayALLs",
+                success: function (data) {
+
+                    console.log(data)
+                    $('#StockDayList>tbody').empty();
+
+                    let trItem = ""
+                    for (let item of data) {
+
+                        trItem = `
+            <tr>
+                <td>${item.code}</td>
+                <td>${item.name}</td>
+                <td>${item.tradeVolume}</td>
+                <td>${item.tradeValue}</td>
+                <td>${item.openingPrice}</td>
+                <td>${item.highestPrice}</td>
+                <td>${item.lowestPrice}</td>
+                <td>${item.closingPrice}</td>
+                <td>${item.change}</td>
+                <td>${item.transaction}</td>                
+            </tr>
+            `
+
+                        $('#StockDayList tbody').append(trItem);
+                    }
+                },
+                error: function (resp) {
+
+                }
+            });
+        }
+
+        //新增會員資料
+        //function createSecu() {
+        //    $.ajax({
+        //        type: "Post",
+        //        url: "http://localhost:5014/apiSecurities",
+        //        data: new FormData($('#dataManageModalForm')[0]),
+        //        processData: false,
+        //        contentType: false,
+        //        success: function () {
+        //            dataManageModal.hide();
+        //            getSecuList();
+        //        },
+
+        //        error: function (rsep) {
+        //            console.log(rsep);
+
+        //        }
+        //    });
+        //}
+
+        // 當頁面加載完成時，執行權限檢查
+        $(document).ready(function () {
+
+            checkUserStatus();
+
+        });
+
+        // 權限檢查
+        function checkUserStatus() {
+            $.ajax({
+                type: "Get",
+                url: "http://localhost:5014/apiAuthController/checkStatus", // 這個端點應該返回用戶的權限狀態
+                success: function (response) {
+                    console.log(response.isLoggedIn);
+                    if (response.isLoggedIn) {
+                        // 如果有權限，顯示頁面內容
+                        $('#pageContent').show();
+                        getSecuList(); // 載入資料
+                    } else {
+                        // 如果沒有權限，隱藏頁面內容並跳轉到首頁
+                        $('#pageContent').hide();
+                        window.location.href = "/home/index.html";
+                    }
+                },
+                error: function (xhr) {
+                    // 處理其他錯誤
+                    console.log(xhr);
+                    //alert("無法檢查權限，請稍後再試。");
+                }
+            });
+        }
+        // 登出
+        function Logout() {
+            $.ajax({
+                type: "Post",
+                url: "http://localhost:5014/apiAuthController/logout",
+                success: function () {
+                    window.location.href = "/home/index.html"; // 登出後導向首頁或登入頁
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                    alert("登出失敗，請稍後再試。");
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
